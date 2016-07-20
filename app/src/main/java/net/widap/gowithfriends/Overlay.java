@@ -1,31 +1,51 @@
 package net.widap.gowithfriends;
 
-import android.content.Context;
-import android.graphics.PixelFormat;
-import android.view.Gravity;
-import android.view.WindowManager;
-import android.widget.TextView;
-import android.widget.Toast;
-
 /**
  *  Created by william on 7/19/16.
  */
+
+import android.content.Context;
+import android.graphics.PixelFormat;
+import android.view.Gravity;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.TextView;
+
 public class Overlay {
 
     private WindowManager wm;
-    TextView topLeftView;
+    WindowManager.LayoutParams params;
+    View view;
 
     Overlay()
     {
-
+        wm = (WindowManager)Manager.inst.getContext().getSystemService(Context.WINDOW_SERVICE);
     }
 
-    void create(Context context)
+    void create()
     {
+        setupView();
+        setupLayoutParams();
+        wm.addView(view, params);
+    }
 
+    void remove()
+    {
+        wm.removeView(view);
+    }
 
-        wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-        WindowManager.LayoutParams params;
+    void setupView()
+    {
+        TextView textView;
+        textView=new TextView(Manager.inst.getContext());
+        String txt="[Overlay test text]";
+        textView.setText(txt);
+        textView.setTextSize(24);
+        view=textView;
+    }
+
+    void setupLayoutParams()
+    {
         params = new WindowManager.LayoutParams
                 (
                         WindowManager.LayoutParams.WRAP_CONTENT,
@@ -38,28 +58,14 @@ public class Overlay {
         params.gravity = Gravity.START | Gravity.TOP;
         params.x = 0;
         params.y = 0;
+        //params.width = 600;
+        //params.height = 100;
+    }
 
-        TextView textView = new TextView(context);
-        topLeftView = new TextView(context);
-        WindowManager.LayoutParams topLeftParams = new WindowManager.LayoutParams
-                (
-                        WindowManager.LayoutParams.WRAP_CONTENT,
-                        WindowManager.LayoutParams.WRAP_CONTENT,
-                        WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                        PixelFormat.TRANSLUCENT
-                );
-
-        topLeftParams.gravity = Gravity.START | Gravity.TOP;
-        topLeftParams.x = 300;
-        topLeftParams.y = 200;
-        topLeftParams.width = 600;
-        topLeftParams.height = 100;
-        String txt="This is a test";
-        textView.setText(txt);
-        textView.setTextSize(24);
-        //topLeftView.
-        wm.addView(textView, topLeftParams);
-        System.out.println("overlay creation done");
+    void setLoc(int x, int y)
+    {
+        params.x=x;
+        params.y=y;
+        wm.updateViewLayout(view, params);
     }
 }

@@ -12,9 +12,7 @@ public class LaunchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
-        //Intent service = new Intent(this, MainService.class);
-        //startService(service);
-        overlay = new Overlay();
-        overlay.create(this);
+        Intent service = new Intent(this, MainService.class);
+        startService(service);
     }
 }

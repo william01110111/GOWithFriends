@@ -6,10 +6,9 @@ import android.os.IBinder;
 
 public class MainService extends Service {
 
-    Overlay overlay;
-
     public MainService() {
 
+        new Manager(this);
     }
 
     @Override
@@ -22,14 +21,13 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Manager.inst.startOverlayLayer();
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        overlay = new Overlay();
-        overlay.create(this);
     }
 
     @Override
