@@ -13,31 +13,30 @@ import android.widget.TextView;
 
 public class Overlay {
 
-    private WindowManager wm;
     WindowManager.LayoutParams params;
     View view;
 
     Overlay()
     {
-        wm = (WindowManager)Manager.inst.getContext().getSystemService(Context.WINDOW_SERVICE);
+
     }
 
     void create()
     {
         setupView();
         setupLayoutParams();
-        wm.addView(view, params);
+        Manager.getWm().addView(view, params);
     }
 
     void remove()
     {
-        wm.removeView(view);
+        Manager.getWm().removeView(view);
     }
 
     void setupView()
     {
         TextView textView;
-        textView=new TextView(Manager.inst.getContext());
+        textView=new TextView(Manager.getContext());
         String txt="[Overlay test text]";
         textView.setText(txt);
         textView.setTextSize(24);
@@ -66,6 +65,6 @@ public class Overlay {
     {
         params.x=x;
         params.y=y;
-        wm.updateViewLayout(view, params);
+        Manager.getWm().updateViewLayout(view, params);
     }
 }
