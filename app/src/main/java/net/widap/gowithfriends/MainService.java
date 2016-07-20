@@ -6,6 +6,8 @@ import android.os.IBinder;
 
 public class MainService extends Service {
 
+    Overlay overlay;
+
     public MainService() {
 
     }
@@ -26,11 +28,13 @@ public class MainService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        overlay = new Overlay();
+        overlay.create(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        System.out.println("Main service for 'GO With Friends' has been destroyed");
     }
 }
