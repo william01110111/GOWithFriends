@@ -20,9 +20,10 @@ public class Manager {
     private WindowManager windowManager;
     public static final String TAG="GO_With_Friends";
 
-    private Overlay overlay;
-    private PixmapHandler pixmapHandler;
-    private ScreenGrabber screenGrabber;
+    Overlay overlay;
+    PixmapHandler pixmapHandler;
+    ScreenProcessor screenProcessor;
+    ScreenGrabber screenGrabber;
 
     public Manager(Context contextIn)
     {
@@ -30,6 +31,7 @@ public class Manager {
         context=contextIn;
         pixmapHandler=new PixmapHandler();
         screenGrabber=new ScreenGrabber(pixmapHandler);
+        screenProcessor=new ScreenProcessor(pixmapHandler);
     }
 
     public static Context getContext() {return inst.context;}
@@ -59,8 +61,18 @@ public class Manager {
         overlay.remove();
     }
 
+    private int i=0;
+
     public void screenFramedGrabed()
     {
-        Log.d(TAG, "screenFramedGrabed: screenFrameGrabbed() called");
+        //double ang=Math.toDegrees(screenProcessor.getCompassAng());
+        //System.out.println("pixel: " + pixmapHandler.get(600, 800).r);
+        //Log.d(TAG, "screenFramedGrabed: compass is: "+ang);
+
+        //if (++i%40==39)
+        //    overlay.setLoc((int)(ang*2), 0);
+
+        if (++i%4==0)
+            overlay.setImage(pixmapHandler.getBitmap());
     }
 }

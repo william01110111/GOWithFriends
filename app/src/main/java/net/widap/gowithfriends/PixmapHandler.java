@@ -21,6 +21,9 @@ public class PixmapHandler {
         height=0;
     }
 
+    public int w() {return width;}
+    public int h() {return height;}
+
     public void setWithImage(Image image)
     {
         width=image.getWidth();
@@ -38,7 +41,21 @@ public class PixmapHandler {
         image.getPlanes()[0].getBuffer().get(data);
     }
 
-    public void getPix(int x, int y, Clr clr)
+    public void set(int x, int y, Clr clr)
+    {
+        int o=((height-y-1)*width+x)*2;
+        data[o+1]=(byte)((clr.r & 0b11111000) | ((clr.g >> 5) | 0b00000111));
+        data[o]=(byte)((clr.b >> 3 & 0b00011111) | ((clr.g << 3) | 0b11100000));
+    }
+
+    public Clr get(int x, int y) //less efficient but convenient
+    {
+        Clr c=new Clr();
+        get(x, y, c);
+        return c;
+    }
+
+    public void get(int x, int y, Clr clr)
     {
         int o=((height-y-1)*width+x)*2;
         clr.r=data[o+1] & 0b11111000;
@@ -46,22 +63,11 @@ public class PixmapHandler {
         clr.b=(data[o] << 3)  & 0b11111100;
     }
 
-    public Clr getPix(int x, int y) //less efficient but convenient
-    {
-        Clr c=new Clr();
-        getPix(x, y, c);
-        return c;
-    }
-
-    public void setPix(int x, int y, Clr clr)
-    {
-        int o=((height-y-1)*width+x)*2;
-        data[o+1]=(byte)((clr.r & 0b11111000) | ((clr.g >> 5) | 0b00000111));
-        data[o]=(byte)((clr.b >> 3 & 0b00011111) | ((clr.g << 3) | 0b11100000));
-    }
-
     public Bitmap getBitmap()
     {
+        if (width==0 || height==0)
+            return null;
+
         Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         //bmp.setPixels(data, 0, 0, 0, w, h);
         //bmp.;
@@ -70,13 +76,15 @@ public class PixmapHandler {
 
         Clr clr=new Clr();
 
+        //System.out.println("pixel: " + get(600, 800).g);
+
         int[] ary=new int[width*height];
 
         for (int y=0; y<height; ++y)
         {
             for (int x=0; x<width; ++x)
             {
-                getPix(x, y, clr);
+                get(x, y, clr);
                 ary[(height-y-1)*width+x]=(0xFF<<24) | ((clr.r & 0xFF) << 16) | ((clr.g & 0xFF) << 8) | (clr.b & 0xFF);
                 //bmp.setPixel(x, y, (0xFF<<24) | (clr.r << 16) | (clr.g << 8) | (clr.b));
             }

@@ -1,6 +1,7 @@
 package net.widap.gowithfriends;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
 import android.content.Context;
 import android.hardware.display.DisplayManager;

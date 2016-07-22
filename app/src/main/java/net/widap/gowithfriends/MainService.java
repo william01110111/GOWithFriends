@@ -22,7 +22,7 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //Manager.inst.startInteraction();
+        Manager.inst.startInteraction();
         return super.onStartCommand(intent, flags, startId);
     }
 
