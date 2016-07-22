@@ -72,7 +72,9 @@ public class Manager {
         //if (++i%40==39)
         //    overlay.setLoc((int)(ang*2), 0);
 
-        if (++i%4==0)
-            overlay.setImage(pixmapHandler.getBitmap());
+        //if (++i%4==0)
+        //    overlay.setImage(pixmapHandler.getBitmap());
+
+        overlay.update();
     }
 }

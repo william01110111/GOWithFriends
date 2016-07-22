@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -68,8 +69,12 @@ public class Overlay {
 
         //view = new CustomView(Manager.getContext());
 
-        view=new ImageView(Manager.getContext());
-        view.setAlpha(1.0f);
+        //view=new ImageView(Manager.getContext());
+        //view.setAlpha(1.0f);
+
+        view=new CustomSurfaceView(Manager.getContext());
+
+        //surfaceView.
     }
 
     void setupLayoutParams()
@@ -86,7 +91,7 @@ public class Overlay {
         params.gravity = Gravity.START | Gravity.TOP;
         params.x = 0;
         params.y = 0;
-        params.width = 400;
+        params.width = 300;
         params.height = 400;
     }
 
@@ -100,9 +105,14 @@ public class Overlay {
         Manager.getWm().updateViewLayout(view, params);
     }
 
-    void setImage(Bitmap bmp)
+    void update()
+    {
+        ((CustomSurfaceView)view).draw();
+    }
+
+    /*void setImage(Bitmap bmp)
     {
         if (bmp!=null)
             ((ImageView)view).setImageBitmap(bmp);
-    }
+    }*/
 }
