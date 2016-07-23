@@ -27,25 +27,26 @@ public class ScreenProcessor {
         {
             for (x=left; x<right; ++x)
             {
-                img.set(x, y, clr);
+                img.get(x, y, clr);
+                //System.out.println("Pixel found!!!");
                 int a=getCompassPart(clr);
                 if (a==2) //red
                 {
                     avgRedX+=x;
                     avgRedY+=y;
                     totalRed++;
-                    img.set(x, y, new Clr(255, 0, 0));
+                    //img.set(x, y, new Clr(255, 0, 0));
                 }
                 else if (a==1) //grey
                 {
                     avgGreyX+=x;
                     avgGreyY+=y;
                     totalGrey++;
-                    img.set(x, y, new Clr(128, 128, 128));
+                    //img.set(x, y, new Clr(128, 128, 128));
                 }
                 else //0, white
                 {
-                    img.set(x, y, new Clr(255, 255,255));
+                    //img.set(x, y, new Clr(255, 255,255));
                 }
             }
         }

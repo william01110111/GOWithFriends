@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "304808337383",
+    "firebase_url": "https://go-with-friends.firebaseio.com",
+    "project_id": "go-with-friends",
+    "storage_bucket": "go-with-friends.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304808337383:android:e52e99d265c954d4",
+        "android_client_info": {
+          "package_name": "net.widap.gowithfriends"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304808337383-7df5nrb5kfh9udm3v38gpj5uimkaptnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSLNWQQVDbTrVbhyx9-QhElavvLfg2AB0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,6 +17,7 @@ public class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     private SurfaceHolder holder;
     private Paint paint;
+    private Canvas canvas;
 
     public CustomSurfaceView(Context context)
     {
@@ -25,11 +26,6 @@ public class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Call
         holder=getHolder();
         holder.addCallback(this);
         holder.setFormat(PixelFormat.TRANSPARENT);
-        paint=new Paint();
-        paint.setColor(200);
-        paint.setStrokeWidth(30);
-        paint.setStrokeWidth(60);
-        paint.setAlpha(128);
     }
 
     public void surfaceCreated(SurfaceHolder var1)
@@ -49,13 +45,13 @@ public class CustomSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     public void draw()
     {
-        Canvas canvas=holder.lockCanvas();
+        canvas=holder.lockCanvas();
 
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        //canvas.drawLine(0, 0, 20, 20, paint);
-        //canvas.drawBitmap(Manager.inst.pixmapHandler.getBitmap(), 0, 0, null);
-        canvas.drawOval(0, 0, 200, 430, paint);
+
+        Manager.inst.drawStuff(canvas);
 
         holder.unlockCanvasAndPost(canvas);
+        canvas=null;
     }
 }

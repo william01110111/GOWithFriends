@@ -1,6 +1,7 @@
 package net.widap.gowithfriends;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.media.projection.MediaProjection;
 import android.util.Log;
 import android.view.WindowManager;
@@ -20,10 +21,13 @@ public class Manager {
     private WindowManager windowManager;
     public static final String TAG="GO_With_Friends";
 
-    Overlay overlay;
-    PixmapHandler pixmapHandler;
-    ScreenProcessor screenProcessor;
-    ScreenGrabber screenGrabber;
+    public Overlay overlay;
+    public PixmapHandler pixmapHandler;
+    public ScreenProcessor screenProcessor;
+    public ScreenGrabber screenGrabber;
+    public CustomDrawing customDrawing;
+
+    public double compassAng=0;
 
     public Manager(Context contextIn)
     {
@@ -32,6 +36,7 @@ public class Manager {
         pixmapHandler=new PixmapHandler();
         screenGrabber=new ScreenGrabber(pixmapHandler);
         screenProcessor=new ScreenProcessor(pixmapHandler);
+        customDrawing=new CustomDrawing();
     }
 
     public static Context getContext() {return inst.context;}
@@ -53,7 +58,6 @@ public class Manager {
         if (overlay==null)
             overlay = new Overlay();
         overlay.create();
-        overlay.setLoc(200, 300);
     }
 
     public void endInteraction()
@@ -65,8 +69,8 @@ public class Manager {
 
     public void screenFramedGrabed()
     {
-        //double ang=Math.toDegrees(screenProcessor.getCompassAng());
-        //System.out.println("pixel: " + pixmapHandler.get(600, 800).r);
+        compassAng=screenProcessor.getCompassAng();
+        //System.out.println("compass ang: " + Math.toDegrees(compassAng));
         //Log.d(TAG, "screenFramedGrabed: compass is: "+ang);
 
         //if (++i%40==39)
@@ -76,5 +80,13 @@ public class Manager {
         //    overlay.setImage(pixmapHandler.getBitmap());
 
         overlay.update();
+    }
+
+    public void drawStuff(Canvas canvas)
+    {
+        customDrawing.setCanvas(canvas);
+        double x=Math.toDegrees(Math.PI-Manager.inst.compassAng)*pixmapHandler.w()/60;
+        double y=400;
+        customDrawing.drawPlayer((int)x, (int)y);
     }
 }
